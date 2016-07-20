@@ -26,7 +26,7 @@
                 var w = unit / 3;
                 for (int i = 0; i < size; i += unit)
                 {
-                    for (int j = 0; j < size; j++)
+                    for (int j = 0; j < size; j += unit)
                     {
                         int x = xorg + i;
                         int y = yorg + j;
