@@ -13,11 +13,11 @@
     {
         static string GetCuboidWithVariant(int x1, int y1, int z1, int x2, int y2, int z2, string blockType, string variant)
         {
-            return $"<DrawCuboid x1=\"{x1}\" y1=\"{x2}\" z1=\"{z1}\" x2=\"{x2}\" y2=\"{y2}\" z2=\"{z2}\" type=\"{blockType}\" variant=\"{variant}\"/>";
+            return $"<DrawCuboid x1=\"{x1}\" y1=\"{y1}\" z1=\"{z1}\" x2=\"{x2}\" y2=\"{y2}\" z2=\"{z2}\" type=\"{blockType}\" variant=\"{variant}\"/>";
         }
         static string GetCuboid(int x1, int y1, int z1, int x2, int y2, int z2, string blockType)
         {
-            return $"<DrawCuboid x1=\"{x1}\" y1=\"{x2}\" z1=\"{z1}\" x2=\"{x2}\" y2=\"{y2}\" z2=\"{z2}\" type=\"{blockType}\"/>";
+            return $"<DrawCuboid x1=\"{x1}\" y1=\"{y1}\" z1=\"{z1}\" x2=\"{x2}\" y2=\"{y2}\" z2=\"{z2}\" type=\"{blockType}\"/>";
         }
         static string Menger(int xorg, int yorg, int zorg, int size, string blockType, string variant, string holeType)
         {
