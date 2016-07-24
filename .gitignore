@@ -213,3 +213,6 @@ Minecraft/Minecraft_Client.launch
 
 /Malmo/samples/CSharp_examples/RunMission.csproj
 /Malmo/samples/CSharp_examples/packages
+/Minecraft/.minecraft/mods/MalmoMod.jar
+/Minecraft/.minecraftserver/mods/MalmoMod.jar
+/Minecraft/run

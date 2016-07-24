@@ -133,14 +133,14 @@
                 if (worldState.number_of_observations_since_last_state > 0)
                 {
                     var msg = worldState.observations[0].text;
-                    var observations = JObject.Parse(msg);
-                    var grid = observations["floor3x3"][0];
-                    if (isJumping && grid[4].Value<string>() != "lava")
+                    dynamic observations = JObject.Parse(msg);
+                    var grid = observations.floor3x3;
+                    if (isJumping && grid[4] != "lava")
                     {
                         agentHost.sendCommand("jump 0");
                         isJumping = false;
                     }
-                    if(grid[3].Value<string>()=="lava")
+                    if (grid[3] == "lava")
                     {
                         agentHost.sendCommand("jump 1");
                         isJumping = true;
