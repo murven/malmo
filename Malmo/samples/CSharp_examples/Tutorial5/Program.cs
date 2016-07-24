@@ -1,6 +1,7 @@
 ﻿namespace Tutorial5
 {
     using Microsoft.Research.Malmo;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -105,14 +106,14 @@
             Console.WriteLine("Mission running...");
 
             //Possible solution for challenge set in tutorial 4
-            //agentHost.sendCommand("hotbar.9 1");
-            //agentHost.sendCommand("hotbar.9 0");
+            agentHost.sendCommand("hotbar.9 1");
+            agentHost.sendCommand("hotbar.9 0");
 
-            //agentHost.sendCommand("pitch 0.2");
-            //Thread.Sleep(1000);
-            //agentHost.sendCommand("pitch 0");
-            //agentHost.sendCommand("move 1");
-            //agentHost.sendCommand("attack 1");
+            agentHost.sendCommand("pitch 0.2");
+            Thread.Sleep(1000);
+            agentHost.sendCommand("pitch 0");
+            agentHost.sendCommand("move 1");
+            agentHost.sendCommand("attack 1");
 
 
             Random rand = new Random();
@@ -128,6 +129,13 @@
                     worldState.number_of_rewards_since_last_state);
                 foreach (TimestampedReward reward in worldState.rewards) Console.Error.WriteLine("Summed reward: {0}", reward.getValue());
                 foreach (TimestampedString error in worldState.errors) Console.Error.WriteLine("Error: {0}", error.text);
+                if(worldState.number_of_observations_since_last_state > 0)
+                {
+                    var msg = worldState.observations[0].text;
+                    var observations = JObject.Parse(msg);
+                    var grid = observations["floor3x3"][0];
+                    //ADD SOME CODE HERE TO SAVE YOUR AGENT
+                }
             }
             while (worldState.is_mission_running);
 
