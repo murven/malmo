@@ -123,11 +123,11 @@
             {
                 Thread.Sleep(500);
                 worldState = agentHost.getWorldState();
-                Console.WriteLine(
-                    "video,observations,rewards received: {0}, {1}, {2}",
-                    worldState.number_of_video_frames_since_last_state,
-                    worldState.number_of_observations_since_last_state,
-                    worldState.number_of_rewards_since_last_state);
+                //Console.WriteLine(
+                //    "video,observations,rewards received: {0}, {1}, {2}",
+                //    worldState.number_of_video_frames_since_last_state,
+                //    worldState.number_of_observations_since_last_state,
+                //    worldState.number_of_rewards_since_last_state);
                 foreach (TimestampedReward reward in worldState.rewards) Console.Error.WriteLine("Summed reward: {0}", reward.getValue());
                 foreach (TimestampedString error in worldState.errors) Console.Error.WriteLine("Error: {0}", error.text);
                 if (worldState.number_of_observations_since_last_state > 0)
@@ -135,6 +135,7 @@
                     var msg = worldState.observations[0].text;
                     dynamic observations = JObject.Parse(msg);
                     var grid = observations.floor3x3;
+                    //Console.WriteLine(grid);
                     if (isJumping && grid[4] != "lava")
                     {
                         agentHost.sendCommand("jump 0");
@@ -142,9 +143,14 @@
                     }
                     if (grid[3] == "lava")
                     {
+                        Console.WriteLine("Found lava!!");
                         agentHost.sendCommand("jump 1");
                         isJumping = true;
                     }
+                }
+                else
+                {
+                    Console.WriteLine("No Observations!");
                 }
             }
             while (worldState.is_mission_running);
