@@ -15,22 +15,9 @@
         static Random random = new Random();
         static void Main(string[] args)
         {
-            //sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)  # flush print output immediately
             Console.Clear();
-
-            //agent = TabQAgent()
             var agent = new TabQAgent();
-            //agent_host = MalmoPython.AgentHost()
             AgentHost agentHost = new AgentHost();
-            //try:
-            //    agent_host.parse(sys.argv)
-            //except RuntimeError as e:
-            //    print 'ERROR:',e
-            //    print agent_host.getUsage()
-            //    exit(1)
-            //if agent_host.receivedArgument("help"):
-            //    print agent_host.getUsage()
-            //    exit(0)
             try
             {
                 agentHost.parse(new StringVector(Environment.GetCommandLineArgs()));
@@ -50,16 +37,6 @@
 
 
             //# -- set up the mission -- #
-            //mission_file = './tutorial_6.xml'
-            //with open(mission_file, 'r') as f:
-            //    print "Loading mission from %s" % mission_file
-            //    mission_xml = f.read()
-            //    my_mission = MalmoPython.MissionSpec(mission_xml, True)
-            //# add 20% holes for interest
-            //for x in range(1, 4):
-            //    for z in range(1, 13):
-            //        if random.random() < 0.1:
-            //            my_mission.drawBlock(x, 45, z, "lava")
             var currentPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var missionFilename = Path.Combine(currentPath, "mission.xml");
             var missionString = System.IO.File.ReadAllText(missionFilename);

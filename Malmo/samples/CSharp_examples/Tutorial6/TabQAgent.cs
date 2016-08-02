@@ -41,7 +41,6 @@
             //"""take 1 action in response to the current world state"""
             var observationText = worldState.observations[0].text;
             dynamic observations = JObject.Parse(observationText);
-            //Console.WriteLine(observations);
             JToken XPos, ZPos;
             observations.TryGetValue("XPos", out XPos);
             observations.TryGetValue("ZPos", out ZPos);
@@ -60,7 +59,6 @@
                     QTable[currentState][action] = 0.0;
                 }
             }
-            //self.drawQ(curr_x = int(obs[u'XPos']), curr_y = int(obs[u'ZPos']))
             //# select the next action
             var actionIndex = 0;
             if (random.NextDouble() < Epsilon || QTable[currentState].Values.Count == 0)
@@ -171,7 +169,6 @@
                     }
                 }
                 //# process final reward
-                //Console.WriteLine($"Curent reward: {currentReward}");
                 totalReward += currentReward;
                 if (PreviousState != null && PreviousAction != null)
                 {
@@ -179,7 +176,6 @@
                 }
             } while (worldState.is_mission_running);
             UpdateQTableFromTerminatingState(totalReward);
-            //self.drawQ()
             return totalReward;
         }
     }
