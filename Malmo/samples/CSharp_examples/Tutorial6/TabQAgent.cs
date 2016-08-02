@@ -8,42 +8,6 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
-
-    struct RouteStep
-    {
-        public string State { get; private set; }
-        public string Action { get; private set; }
-        public RouteStep(string state, string action)
-        {
-            State = state;
-            Action = action;
-        }
-        public override int GetHashCode()
-        {
-            return $"{State}{Action}".GetHashCode();
-        }
-        public override bool Equals(object ob)
-        {
-            if (ob is RouteStep)
-            {
-                RouteStep r = (RouteStep)ob;
-                return State == r.State && Action == r.Action;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        public static bool operator ==(RouteStep r1, RouteStep r2)
-        {
-            return r1.Equals(r2);
-        }
-        public static bool operator !=(RouteStep r1, RouteStep r2)
-        {
-            return !r1.Equals(r2);
-        }
-    }
-
     class TabQAgent
     {
         public double Epsilon { get; set; } = 0.1;
@@ -51,66 +15,26 @@
         public Dictionary<string, Dictionary<string, double>> QTable { get; set; } = new Dictionary<string, Dictionary<string, double>>();
         public string PreviousState { get; set; }
         public string PreviousAction { get; set; }
-        List<RouteStep> route = new List<RouteStep>();
         Random random = new Random();
-        double maxReward = double.MinValue;
         public void UpdateQTable(double reward)
         {
             //Change q_table to reflect what we have learnt.
-
             //retrieve the old action value from the Q-table (indexed by the previous state and the previous action)
             var oldQ = QTable[PreviousState][PreviousAction];
-
             //# TODO: what should the new action value be?
-            var newQ = (oldQ + reward) / 2;
-
+            var newQ = oldQ;
             //# assign the new action value to the Q-table
             QTable[PreviousState][PreviousAction] = newQ;
         }
         public void UpdateQTableFromTerminatingState(double reward)
         {
-
-            ////Change q_table to reflect what we have learnt.
-
-            ////retrieve the old action value from the Q-table (indexed by the previous state and the previous action)
-            //var oldQ = QTable[PreviousState][PreviousAction];
-
-            ////# TODO: what should the new action value be?
-            //var newQ = oldQ;
-
-            ////# assign the new action value to the Q-table
-            //QTable[PreviousState][PreviousAction] = newQ;
-            //************************************
-
-
-            //Change q_table to reflect what we have learnt, after reaching a terminal state.
-
-            maxReward = Math.Max(maxReward, reward);
-            var multiplicator = 2;
-            if (reward == maxReward)
-            {
-                Epsilon -= 0.001;
-                multiplicator = 10;
-                Console.WriteLine("*************************************");
-                Console.WriteLine($"****NEW MAX: {maxReward}************");
-                Console.WriteLine($"****NEW EPSILON: {Epsilon}**********");
-                Console.WriteLine("*************************************");
-            }
-
-            reward *= multiplicator;
-            reward /= route.Count;
-            foreach (var routeStep in route)
-            {
-                //# retrieve the old action value from the Q-table (indexed by the previous state and the previous action)
-                var oldQ = QTable[routeStep.State].ContainsKey(routeStep.Action) ? QTable[routeStep.State][routeStep.Action] : reward;
-
-                //# TODO: what should the new action value be?
-                var newQ = (oldQ + reward) / 2;
-
-                //# assign the new action value to the Q-table
-                QTable[routeStep.State][routeStep.Action] = newQ;
-            }
-            route.Clear();
+            //Change q_table to reflect what we have learnt.
+            //retrieve the old action value from the Q-table (indexed by the previous state and the previous action)
+            var oldQ = QTable[PreviousState][PreviousAction];
+            //# TODO: what should the new action value be?
+            var newQ = oldQ;
+            //# assign the new action value to the Q-table
+            QTable[PreviousState][PreviousAction] = newQ;
         }
         public void Act(WorldState worldState, AgentHost agentHost)
         {
@@ -168,8 +92,6 @@
                 Thread.Sleep(100);
                 PreviousState = currentState;
                 PreviousAction = Actions[actionIndex];
-                var currentStep = new RouteStep(PreviousState, PreviousAction);
-                if (!route.Contains(currentStep)) route.Add(currentStep);
             }
             catch (Exception e)
             {
@@ -249,7 +171,7 @@
                     }
                 }
                 //# process final reward
-                Console.WriteLine($"Curent reward: {currentReward}");
+                //Console.WriteLine($"Curent reward: {currentReward}");
                 totalReward += currentReward;
                 if (PreviousState != null && PreviousAction != null)
                 {

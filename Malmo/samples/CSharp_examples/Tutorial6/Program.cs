@@ -75,7 +75,7 @@
                 }
             }
             var maxRetries = 3;
-            var numRepeats = 1500;
+            var numRepeats = 150;
             if (agentHost.receivedArgument("test"))
             {
                 numRepeats = 1;
